@@ -1,5 +1,5 @@
 import * as React from "react"
-import { GalleryVerticalEnd, Minus, Plus, Zap } from "lucide-react"
+import { Minus, Plus, Zap } from "lucide-react"
 
 import { SearchForm } from "@/components/search-form"
 import {

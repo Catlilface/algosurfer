@@ -1,8 +1,7 @@
-import { BaseQueryExtraOptions, createApi } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Article, Directory, Params } from './types'
-import { Construction } from 'lucide-react'
 
 const BASE_URL = 'https://api.github.com'
 const RAW_BASE_URL = 'https://raw.githubusercontent.com'

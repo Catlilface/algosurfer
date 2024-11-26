@@ -12,7 +12,7 @@ const ContentPage = () => {
     if (isError) {
         navigate('/404')
 
-        return
+        return null
     }
 
     if (isFetching) {
@@ -30,7 +30,6 @@ const ContentPage = () => {
                     const { children, className, node, ...rest } = props
                     const match = /scene:(\d+)/.exec(className || '')
 
-                    console.log(match)
                     return match ? (
                         <Scene category={category} article={article} scene={Number.parseInt(match[1])} />
                     ) : (

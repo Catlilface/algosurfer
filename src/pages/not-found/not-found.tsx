@@ -1,8 +1,7 @@
-import { router } from "@/app/router"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { ArrowDownAz, ArrowLeft, ArrowUpLeft, Home, LucideArrowUpLeft, Shuffle, SquareArrowLeft } from "lucide-react"
-import { Link, useNavigate } from "react-router-dom"
+import { ArrowLeft, Home } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 const NotFound = () => {
     const navigate = useNavigate()
