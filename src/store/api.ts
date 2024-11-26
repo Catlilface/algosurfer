@@ -8,7 +8,7 @@ const BASE_URL = 'https://api.github.com'
 const RAW_BASE_URL = 'https://raw.githubusercontent.com'
 const OWNER = 'catlilface'
 const REPO = 'algosurfer'
-const DOCS_PATH = 'docs'
+const DOCS_PATH = 'src/docs'
 
 export const contentApi = createApi({
   reducerPath: 'githubApi',
