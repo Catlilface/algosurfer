@@ -4,11 +4,11 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 // Define a service using a base URL and expected endpoints
 export const pokemonApi = createApi({
-  reducerPath: 'pokemonApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
+  reducerPath: 'githubApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.github.com' }),
   endpoints: (builder) => ({
-    getPokemonByName: builder.query<Pokemon, string>({
-      query: (name) => `pokemon/${name}`,
+    getRepoByName: builder.query<any, string>({
+      query: (name, repo) => `repos/${name}/${repo}/contents/`,
     }),
   }),
 })
