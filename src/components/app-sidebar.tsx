@@ -15,6 +15,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSkeleton,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
@@ -25,7 +26,11 @@ import { useGetDirectoriesQuery, useGetDocumentsQuery } from "@/store/api"
 import { Link } from "react-router-dom"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data } = useGetDirectoriesQuery({})
+  const { data, isLoading } = useGetDirectoriesQuery({})
+
+  if (isLoading) {
+    return <SidebarMenuSkeleton />
+  }
 
   return (
     <Sidebar {...props}>
@@ -63,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 const SidebarItem = ({ path }: { path: string }) => {
   const [isOpen, setIsOpen] = React.useState(false)
-  const { data } = useGetDocumentsQuery({ path }, { skip: !isOpen })
+  const { data, isFetching } = useGetDocumentsQuery({ path }, { skip: !isOpen })
 
   return (
 
@@ -80,19 +85,21 @@ const SidebarItem = ({ path }: { path: string }) => {
             <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
           </SidebarMenuButton>
         </CollapsibleTrigger>
-        {data?.length ? (
-          <CollapsibleContent>
-            <SidebarMenuSub>
-              {data.map((subitem, index) => (
-                <SidebarMenuSubItem key={index}>
-                  <SidebarMenuSubButton asChild>
-                    <Link to={subitem.path}>{startCase(subitem.name)}</Link>
-                  </SidebarMenuSubButton>
-                </SidebarMenuSubItem>
-              ))}
-            </SidebarMenuSub>
-          </CollapsibleContent>
-        ) : null}
+        {isFetching ? <SidebarMenuSkeleton /> :
+          data?.length && (
+            <CollapsibleContent>
+              <SidebarMenuSub>
+                {data.map((subitem, index) => (
+                  <SidebarMenuSubItem key={index}>
+                    <SidebarMenuSubButton asChild>
+                      <Link to={subitem.path}>{startCase(subitem.name)}</Link>
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                ))}
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          )
+        }
       </SidebarMenuItem>
     </Collapsible>
   )

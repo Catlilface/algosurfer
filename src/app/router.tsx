@@ -3,6 +3,7 @@ import { Layout } from "@/app/dashboard";
 import { NotFound } from "@/pages";
 import { Home } from "@/pages/home";
 import ContentPage from "@/pages/content/content";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const routes = [
     {

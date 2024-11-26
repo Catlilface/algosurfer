@@ -4,3 +4,4 @@ Trial division is one of the most straightforward methods for generating prime n
 
 This article explores how trial division works to generate prime numbers, its implementation, and its characteristics. We'll examine both its simplicity as an educational tool and its limitations in practical applications. Understanding trial division provides valuable insights into more sophisticated prime generation techniques.
 
+[scene:1]

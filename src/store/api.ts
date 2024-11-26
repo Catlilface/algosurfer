@@ -1,10 +1,11 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
+import { BaseQueryExtraOptions, createApi } from '@reduxjs/toolkit/query/react'
 
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Article, Directory, Params } from './types'
+import { Construction } from 'lucide-react'
 
-const BASE_URL = 'https://api.gitub.com'
-const RAW_BASE_URL = 'https://raw.ithubusercontent.com'
+const BASE_URL = 'https://api.github.com'
+const RAW_BASE_URL = 'https://raw.githubusercontent.com'
 const OWNER = 'catlilface'
 const REPO = 'algosurfer'
 const DOCS_PATH = 'docs'
@@ -25,11 +26,15 @@ export const rawContentApi = createApi({
   reducerPath: 'rawContentApi',
   baseQuery: fetchBaseQuery({ baseUrl: RAW_BASE_URL }),
   endpoints: (builder) => ({
-    getArticle: builder.query<Article, Params>({
-      query: ({ path, language }) => `${OWNER}/${REPO}/master/${DOCS_PATH}/${path}/article.${language}.md`,
+    getArticle: builder.query<string, Params>({
+      query: ({ path, language = 'en' }) => ({
+        url: `${OWNER}/${REPO}/master/${DOCS_PATH}/${path}/article.${language}.md`,
+        responseHandler: (response: Response) => response.text(),
+      }),
     }),
   }),
 })
+
 
 export const { useGetDirectoriesQuery, useGetDocumentsQuery } = contentApi
 export const { useGetArticleQuery } = rawContentApi
