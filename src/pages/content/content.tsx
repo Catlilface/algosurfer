@@ -28,7 +28,7 @@ const ContentPage = () => {
             components={{
                 code(props) {
                     const { children, className, node, ...rest } = props
-                    const match = /language-(\w+)/.exec(className || '')
+                    const match = /scene:(\d+)/.exec(className || '')
 
                     console.log(match)
                     return match ? (
