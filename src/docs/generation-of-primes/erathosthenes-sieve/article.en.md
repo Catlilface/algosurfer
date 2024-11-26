@@ -4,4 +4,6 @@ The Sieve of Eratosthenes is an ancient and efficient algorithm for finding all 
 
 This article explores how the Sieve of Eratosthenes works, its implementation, and its performance characteristics. While simple to understand and implement, it remains one of the most efficient ways to generate a list of prime numbers up to a specified bound. We'll examine both its historical significance and its modern applications in computational mathematics.
 
-[% scene:1 %]
+```javascript-1
+привет
+```

@@ -1,3 +1,4 @@
+import Scene from "@/components/scene/scene";
 import { useGetArticleQuery } from "@/store/api";
 import { Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -7,7 +8,6 @@ const ContentPage = () => {
     const { category, article } = useParams();
     const { data, isError, isFetching } = useGetArticleQuery({ path: `${category}/${article}` });
     const navigate = useNavigate();
-
 
     if (isError) {
         navigate('/404')
@@ -23,7 +23,25 @@ const ContentPage = () => {
         )
     }
 
-    return <ReactMarkdown>{data || 'No content found'}</ReactMarkdown>
+    return (
+        <ReactMarkdown
+            components={{
+                code(props) {
+                    const { children, className, node, ...rest } = props
+                    const match = /language-(\w+)/.exec(className || '')
+
+                    console.log(match)
+                    return match ? (
+                        <Scene category={category} article={article} scene={Number.parseInt(match[1])} />
+                    ) : (
+                        <code {...rest} className={className}>
+                            {children}
+                        </code>
+                    )
+                }
+            }}
+        >{data || 'No content found'}</ReactMarkdown>
+    )
 }
 
 export default ContentPage;

@@ -56,7 +56,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             {data?.map((item, index) => (
-              <SidebarItem key={index} path={item.path} />
+              <SidebarItem key={index} path={item.path.replace('src/docs/', '')} />
             ))}
           </SidebarMenu>
         </SidebarGroup>
@@ -80,7 +80,7 @@ const SidebarItem = ({ path }: { path: string }) => {
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton>
-            {startCase(path)}{" "}
+            {startCase(path)}
             <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
             <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
           </SidebarMenuButton>
@@ -92,7 +92,7 @@ const SidebarItem = ({ path }: { path: string }) => {
                 {data.map((subitem, index) => (
                   <SidebarMenuSubItem key={index}>
                     <SidebarMenuSubButton asChild>
-                      <Link to={subitem.path}>{startCase(subitem.name)}</Link>
+                      <Link to={`${path}/${subitem.name}`}>{startCase(subitem.name)}</Link>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                 ))}

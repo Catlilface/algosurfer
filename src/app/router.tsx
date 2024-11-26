@@ -11,7 +11,7 @@ export const routes = [
         element: <Home />,
     },
     {
-        path: "/docs/:category/:article",
+        path: "/:category/:article",
         element: <ContentPage />,
     },
 ] as RouteObject[]

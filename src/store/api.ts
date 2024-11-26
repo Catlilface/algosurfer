@@ -18,7 +18,7 @@ export const contentApi = createApi({
       query: () => `repos/${OWNER}/${REPO}/contents/${DOCS_PATH}`,
     }),
     getDocuments: builder.query<Article[], Params>({
-      query: ({ path }) => `repos/${OWNER}/${REPO}/contents/${path}`,
+      query: ({ path }) => `repos/${OWNER}/${REPO}/contents/${DOCS_PATH}/${path}`,
     }),
   }),
 })
