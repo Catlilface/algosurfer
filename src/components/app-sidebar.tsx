@@ -20,11 +20,13 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { routes } from "@/app/router"
-import { Link } from "react-router-dom"
 import { startCase } from "lodash"
+import { useGetDirectoriesQuery, useGetDocumentsQuery } from "@/store/api"
+import { Link } from "react-router-dom"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data } = useGetDirectoriesQuery({})
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -48,40 +50,50 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {routes.map((item, index) => (
-              <Collapsible
-                key={index}
-                defaultOpen={index === 0}
-                className="group/collapsible"
-              >
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton>
-                      {startCase(item.path)}{" "}
-                      <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
-                      <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  {item.children?.length ? (
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {item.children?.map((subitem, index) => (
-                          <SidebarMenuSubItem key={index}>
-                            <SidebarMenuSubButton asChild>
-                              <Link to={`/${item.path}/${subitem.path}`}>{startCase(subitem.path)}</Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  ) : null}
-                </SidebarMenuItem>
-              </Collapsible>
+            {data?.map((item, index) => (
+              <SidebarItem key={index} path={item.path} />
             ))}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
+  )
+}
+
+const SidebarItem = ({ path }: { path: string }) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const { data } = useGetDocumentsQuery({ path }, { skip: !isOpen })
+
+  return (
+
+    <Collapsible
+      className="group/collapsible"
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <SidebarMenuItem>
+        <CollapsibleTrigger asChild>
+          <SidebarMenuButton>
+            {startCase(path)}{" "}
+            <Plus className="ml-auto group-data-[state=open]/collapsible:hidden" />
+            <Minus className="ml-auto group-data-[state=closed]/collapsible:hidden" />
+          </SidebarMenuButton>
+        </CollapsibleTrigger>
+        {data?.length ? (
+          <CollapsibleContent>
+            <SidebarMenuSub>
+              {data.map((subitem, index) => (
+                <SidebarMenuSubItem key={index}>
+                  <SidebarMenuSubButton asChild>
+                    <Link to={subitem.path}>{startCase(subitem.name)}</Link>
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              ))}
+            </SidebarMenuSub>
+          </CollapsibleContent>
+        ) : null}
+      </SidebarMenuItem>
+    </Collapsible>
   )
 }

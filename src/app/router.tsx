@@ -1,11 +1,17 @@
 import { createHashRouter, Outlet, RouteObject } from "react-router-dom";
 import { Layout } from "@/app/dashboard";
 import { NotFound } from "@/pages";
+import { Home } from "@/pages/home";
+import ContentPage from "@/pages/content/content";
 
 export const routes = [
     {
-        path: ":category/:article",
-        element: <Outlet />,
+        path: "/",
+        element: <Home />,
+    },
+    {
+        path: "/docs/:category/:article",
+        element: <ContentPage />,
     },
 ] as RouteObject[]
 
